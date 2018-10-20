@@ -160,7 +160,7 @@ app.post('/', (req, res) => {
             ok: true,
             id: usuarioDB.id,
             token: token,
-            usurio: usuarioDB
+            usuario: usuarioDB
         });
     })
 
