@@ -76,9 +76,9 @@ app.post('/google', async(req, res) => {
 
                 res.status(200).json({
                     ok: true,
-                    id: usuarioDB.id,
+                    id: usuarioDB._id,
                     token: token,
-                    usurio: usuarioDB
+                    usuario: usuarioDB
                 });
             }
 
@@ -92,15 +92,15 @@ app.post('/google', async(req, res) => {
             usuario.google = true;
             usuario.password = ':)';
 
-            usuario.save((err, usuarioDb) => {
+            usuario.save((err, usuarioDB) => {
 
                 var token = jwt.sign({ usuario: usuarioDB }, SEDD, { expiresIn: 14400 }); //4 Horas
 
                 res.status(200).json({
                     ok: true,
-                    id: usuarioDB.id,
                     token: token,
-                    usurio: usuarioDB
+                    usuario: usuarioDB,
+                    id: usuarioDB._id
                 });
 
             });

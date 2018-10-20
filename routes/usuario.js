@@ -98,11 +98,12 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
 // Crear Nuevo Usuario
 // =====================================================
 
-app.post('/', mdAutenticacion.verificaToken, (req, res) => {
+app.post('/', (req, res) => {
 
     var body = req.body
 
     var usuario = new Usuario({
+        id: body.id,
         nombre: body.nombre,
         email: body.email,
         password: bcrypt.hashSync(body.password, 10),
