@@ -11,8 +11,7 @@ app.get('/:tipo/:img', (req, res, next) => {
     var tipo = req.params.tipo;
     var img = req.params.img;
 
-    console.log(tipo);
-    console.log(img);
+
 
     var pathImagen = path.resolve(__dirname, `../uploads/${tipo}/${img}`);
 

@@ -74,11 +74,15 @@ app.post('/google', async(req, res) => {
             } else {
                 var token = jwt.sign({ usuario: usuarioDB }, SEDD, { expiresIn: 14400 }); //4 Horas
 
+
+
+
                 res.status(200).json({
                     ok: true,
                     id: usuarioDB._id,
                     token: token,
-                    usuario: usuarioDB
+                    usuario: usuarioDB,
+                    menu: obtenerMenu(usuarioDB.role)
                 });
             }
 
@@ -100,7 +104,8 @@ app.post('/google', async(req, res) => {
                     ok: true,
                     token: token,
                     usuario: usuarioDB,
-                    id: usuarioDB._id
+                    id: usuarioDB._id,
+                    menu: obtenerMenu(usuarioDB.role)
                 });
 
             });
@@ -160,11 +165,48 @@ app.post('/', (req, res) => {
             ok: true,
             id: usuarioDB.id,
             token: token,
-            usuario: usuarioDB
+            usuario: usuarioDB,
+            menu: obtenerMenu(usuarioDB.role)
         });
     })
 
-
 });
+
+function obtenerMenu(ROLE) {
+
+    var menu = [{
+            titulo: 'Pricipal',
+            icono: 'mdi mdi-gauge',
+            submenu: [
+                { titulo: 'Dashboard', url: '/dashboard' },
+                { titulo: 'ProgressBar', url: '/progress' },
+                { titulo: 'Graficas', url: '/graficas1' },
+                { titulo: 'Promesas', url: '/promesas' },
+                { titulo: 'RXJS', url: '/rxjs' },
+            ]
+        },
+        {
+            titulo: 'Mateniminetos',
+            icono: 'mdi mdi-folder-lock-open',
+            submenu: [
+
+                // { titulo: 'Usuarios', url: '/usuarios' },
+                { titulo: 'Hospitales', url: '/hospitales' },
+                { titulo: 'Medicos', url: '/medicos' }
+
+            ]
+        }
+    ];
+
+
+    if (ROLE === 'ADMIN_ROLE') {
+
+
+        menu[1].submenu.unshift({ titulo: 'Usuarios', url: '/usuarios' })
+
+    }
+
+    return menu;
+}
 
 module.exports = app;
